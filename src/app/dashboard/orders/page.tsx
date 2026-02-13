@@ -171,7 +171,7 @@ const itemVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.35, ease: "easeOut" },
+    transition: { duration: 0.35 },
   },
 };
 
@@ -239,7 +239,7 @@ function OrderCard({ order }: { order: Order }) {
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ height: "auto", opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.25, ease: "easeInOut" }}
+                transition={{ duration: 0.25 }}
                 className="overflow-hidden"
               >
                 <Separator />

@@ -151,7 +151,7 @@ export default function AdminLayout({
       <motion.aside
         initial={false}
         animate={{ width: collapsed ? 72 : 260 }}
-        transition={{ duration: 0.3, ease: "easeInOut" }}
+        transition={{ duration: 0.3 }}
         className="hidden md:flex flex-col bg-slate-900 border-r border-slate-800 relative z-30"
       >
         {/* Logo */}

@@ -138,7 +138,7 @@ function SuccessContent() {
                 fill="none"
                 initial={{ pathLength: 0 }}
                 animate={{ pathLength: 1 }}
-                transition={{ duration: 0.8, ease: "easeInOut", delay: 0.3 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
               />
               {/* Background fill */}
               <motion.circle
@@ -161,7 +161,7 @@ function SuccessContent() {
                 fill="none"
                 initial={{ pathLength: 0 }}
                 animate={{ pathLength: 1 }}
-                transition={{ duration: 0.5, delay: 1.1, ease: "easeOut" }}
+                transition={{ duration: 0.5, delay: 1.1 }}
               />
               <defs>
                 <linearGradient id="gradient" x1="0" y1="0" x2="120" y2="120">

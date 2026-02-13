@@ -265,7 +265,7 @@ const fadeInUp = {
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.3, delay: i * 0.05, ease: "easeOut" },
+    transition: { duration: 0.3, delay: i * 0.05 },
   }),
 };
 
@@ -310,7 +310,7 @@ export default function HomePage() {
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
+                transition={{ duration: 0.3 }}
               >
                 <Badge variant="secondary" className="mb-4 px-3 py-1 text-xs shadow-lg">
                   <Sparkles className="mr-1 size-3" />
@@ -323,7 +323,7 @@ export default function HomePage() {
               className="mb-6 text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl xl:text-7xl"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: 0.05, ease: "easeOut" }}
+              transition={{ duration: 0.3, delay: 0.05 }}
             >
               Discover Your{" "}
               <span className="bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
@@ -335,7 +335,7 @@ export default function HomePage() {
               className="mx-auto mb-8 max-w-xl text-base text-muted-foreground sm:text-lg lg:text-xl"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: 0.1, ease: "easeOut" }}
+              transition={{ duration: 0.3, delay: 0.1 }}
             >
               Explore thousands of premium products from world-class brands.
               Quality, style, and value -- all in one place.
@@ -345,7 +345,7 @@ export default function HomePage() {
               className="flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: 0.15, ease: "easeOut" }}
+              transition={{ duration: 0.3, delay: 0.15 }}
             >
               <div ref={shopButton}>
                 <Button size="lg" className="w-full gap-2 sm:w-auto shadow-xl hover:shadow-2xl transition-shadow" asChild>
@@ -489,7 +489,7 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
+            transition={{ duration: 0.3 }}
           >
             <h2 className="mb-2 text-2xl font-bold sm:text-3xl">
               Shop by Category
@@ -543,7 +543,7 @@ export default function HomePage() {
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
+          transition={{ duration: 0.3 }}
         >
           <div>
             <h2 className="mb-2 text-2xl font-bold sm:text-3xl">
@@ -641,7 +641,7 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
+            transition={{ duration: 0.3 }}
           >
             <div className="mb-4 inline-flex size-12 items-center justify-center rounded-full bg-white/10">
               <Mail className="size-6 text-primary-foreground" />

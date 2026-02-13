@@ -117,7 +117,7 @@ export function MessageBubble({ message }: MessageBubbleProps) {
     <motion.div
       initial={{ opacity: 0, y: 8, scale: 0.96 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 0.25, ease: "easeOut" }}
+      transition={{ duration: 0.25 }}
       className={cn(
         "flex gap-2.5 px-4",
         isUser ? "flex-row-reverse" : "flex-row"

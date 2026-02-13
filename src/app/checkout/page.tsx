@@ -369,7 +369,7 @@ export default function CheckoutPage() {
                 initial="enter"
                 animate="center"
                 exit="exit"
-                transition={{ duration: 0.3, ease: "easeInOut" }}
+                transition={{ duration: 0.3 }}
               >
                 <Card>
                   <CardHeader>
@@ -626,7 +626,7 @@ export default function CheckoutPage() {
                 initial="enter"
                 animate="center"
                 exit="exit"
-                transition={{ duration: 0.3, ease: "easeInOut" }}
+                transition={{ duration: 0.3 }}
               >
                 <Card>
                   <CardHeader>
@@ -738,7 +738,7 @@ export default function CheckoutPage() {
                 initial="enter"
                 animate="center"
                 exit="exit"
-                transition={{ duration: 0.3, ease: "easeInOut" }}
+                transition={{ duration: 0.3 }}
               >
                 {/* Order Items */}
                 <Card>
