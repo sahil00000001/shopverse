@@ -49,6 +49,7 @@ const sampleProducts: Product[] = [
     rating: 4.8,
     reviewCount: 324,
     badge: "sale",
+    emoji: "🎧",
     gradient: "bg-gradient-to-br from-violet-500/20 via-purple-500/10 to-fuchsia-500/20",
   },
   {
@@ -61,6 +62,7 @@ const sampleProducts: Product[] = [
     rating: 4.6,
     reviewCount: 186,
     badge: "new",
+    emoji: "👜",
     gradient: "bg-gradient-to-br from-amber-500/20 via-orange-500/10 to-yellow-500/20",
   },
   {
@@ -74,6 +76,7 @@ const sampleProducts: Product[] = [
     rating: 4.7,
     reviewCount: 512,
     badge: "sale",
+    emoji: "📹",
     gradient: "bg-gradient-to-br from-blue-500/20 via-cyan-500/10 to-teal-500/20",
   },
   {
@@ -86,6 +89,7 @@ const sampleProducts: Product[] = [
     rating: 4.9,
     reviewCount: 278,
     badge: "trending",
+    emoji: "🌿",
     gradient: "bg-gradient-to-br from-green-500/20 via-emerald-500/10 to-teal-500/20",
   },
   {
@@ -99,6 +103,7 @@ const sampleProducts: Product[] = [
     rating: 4.5,
     reviewCount: 143,
     badge: "sale",
+    emoji: "💻",
     gradient: "bg-gradient-to-br from-slate-500/20 via-gray-500/10 to-zinc-500/20",
   },
   {
@@ -111,6 +116,7 @@ const sampleProducts: Product[] = [
     rating: 4.7,
     reviewCount: 203,
     badge: "new",
+    emoji: "🧘",
     gradient: "bg-gradient-to-br from-pink-500/20 via-rose-500/10 to-red-500/20",
   },
   {
@@ -124,6 +130,7 @@ const sampleProducts: Product[] = [
     rating: 4.8,
     reviewCount: 567,
     badge: "sale",
+    emoji: "📚",
     gradient: "bg-gradient-to-br from-indigo-500/20 via-blue-500/10 to-sky-500/20",
   },
   {
@@ -136,6 +143,7 @@ const sampleProducts: Product[] = [
     rating: 4.6,
     reviewCount: 92,
     badge: "trending",
+    emoji: "🪴",
     gradient: "bg-gradient-to-br from-orange-500/20 via-amber-500/10 to-yellow-500/20",
   },
 ];

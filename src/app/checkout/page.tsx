@@ -75,16 +75,9 @@ const COUNTRIES = [
 
 type ShippingMethod = "standard" | "express" | "overnight";
 
-const SHIPPING_METHODS: {
-  id: ShippingMethod;
-  label: string;
-  description: string;
-  price: number;
-  eta: string;
-  icon: React.ElementType;
-}[] = [
+const SHIPPING_METHODS = [
   {
-    id: "standard",
+    id: "standard" as const,
     label: "Standard Shipping",
     description: "Delivered by postal service",
     price: STANDARD_SHIPPING,
@@ -92,7 +85,7 @@ const SHIPPING_METHODS: {
     icon: Truck,
   },
   {
-    id: "express",
+    id: "express" as const,
     label: "Express Shipping",
     description: "Fast courier delivery",
     price: EXPRESS_SHIPPING,
@@ -100,7 +93,7 @@ const SHIPPING_METHODS: {
     icon: Zap,
   },
   {
-    id: "overnight",
+    id: "overnight" as const,
     label: "Overnight Shipping",
     description: "Next-day delivery guaranteed",
     price: OVERNIGHT_SHIPPING,

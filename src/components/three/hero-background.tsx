@@ -94,7 +94,7 @@ function RotatingTorusKnot({ position }: { position: [number, number, number] })
 function ParticleField({ isDark }: { isDark: boolean }) {
   const particlesRef = useRef<THREE.Points>(null);
 
-  const particles = useMemo(() => {
+  const geometry = useMemo(() => {
     const count = 600;
     const positions = new Float32Array(count * 3);
 
@@ -104,7 +104,9 @@ function ParticleField({ isDark }: { isDark: boolean }) {
       positions[i + 2] = (Math.random() - 0.5) * 25;
     }
 
-    return positions;
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    return geo;
   }, []);
 
   useFrame((state) => {
@@ -116,15 +118,7 @@ function ParticleField({ isDark }: { isDark: boolean }) {
   });
 
   return (
-    <points ref={particlesRef}>
-      <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          count={particles.length / 3}
-          array={particles}
-          itemSize={3}
-        />
-      </bufferGeometry>
+    <points ref={particlesRef} geometry={geometry}>
       <pointsMaterial
         size={0.12}
         color={isDark ? "#c084fc" : "#8b5cf6"}

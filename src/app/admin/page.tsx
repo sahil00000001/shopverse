@@ -269,7 +269,7 @@ export default function AdminDashboard() {
                       color: "#fff",
                       fontSize: "13px",
                     }}
-                    formatter={(value) => [formatPrice(value || 0), "Revenue"]}
+                    formatter={(value) => [formatPrice(Number(value) || 0), "Revenue"]}
                     labelStyle={{ color: "#94a3b8" }}
                   />
                   <Area
@@ -413,7 +413,7 @@ export default function AdminDashboard() {
                       color: "#fff",
                       fontSize: "13px",
                     }}
-                    formatter={(value: number) => [`${value}%`, "Share"]}
+                    formatter={(value) => [`${value || 0}%`, "Share"]}
                   />
                   <Legend
                     verticalAlign="middle"

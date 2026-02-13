@@ -67,7 +67,7 @@ function useSession() {
     data: {
       user: sampleUser,
     },
-    status: "authenticated" as const,
+    status: "authenticated" as "authenticated" | "unauthenticated" | "loading",
   };
 }
 
