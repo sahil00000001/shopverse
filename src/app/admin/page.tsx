@@ -269,7 +269,7 @@ export default function AdminDashboard() {
                       color: "#fff",
                       fontSize: "13px",
                     }}
-                    formatter={(value: number) => [formatPrice(value), "Revenue"]}
+                    formatter={(value) => [formatPrice(value || 0), "Revenue"]}
                     labelStyle={{ color: "#94a3b8" }}
                   />
                   <Area
