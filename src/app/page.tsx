@@ -2,7 +2,14 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
+import { useGSAPButton, useGSAPFadeIn, useGSAPScaleIn, useGSAPStagger, useGSAPFloating } from "@/hooks/use-gsap-animations";
+
+const HeroBackground = dynamic(
+  () => import("@/components/three/hero-background").then((mod) => mod.HeroBackground),
+  { ssr: false }
+);
 import {
   ArrowRight,
   Zap,
@@ -37,12 +44,11 @@ const sampleProducts: Product[] = [
     slug: "wireless-noise-canceling-headphones-pro",
     price: 199.99,
     comparePrice: 299.99,
-    image: "",
+    image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&q=80",
     category: "Electronics",
     rating: 4.8,
     reviewCount: 324,
     badge: "sale",
-    emoji: "\uD83C\uDFA7",
     gradient: "bg-gradient-to-br from-violet-500/20 via-purple-500/10 to-fuchsia-500/20",
   },
   {
@@ -50,12 +56,11 @@ const sampleProducts: Product[] = [
     name: "Premium Leather Crossbody Bag",
     slug: "premium-leather-crossbody-bag",
     price: 89.99,
-    image: "",
+    image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&q=80",
     category: "Fashion",
     rating: 4.6,
     reviewCount: 186,
     badge: "new",
-    emoji: "\uD83D\uDC5C",
     gradient: "bg-gradient-to-br from-amber-500/20 via-orange-500/10 to-yellow-500/20",
   },
   {
@@ -64,12 +69,11 @@ const sampleProducts: Product[] = [
     slug: "smart-home-security-camera-4k",
     price: 149.99,
     comparePrice: 199.99,
-    image: "",
+    image: "https://images.unsplash.com/photo-1557324232-b8917d3c3dcb?w=800&q=80",
     category: "Electronics",
     rating: 4.7,
     reviewCount: 512,
     badge: "sale",
-    emoji: "\uD83D\uDCF7",
     gradient: "bg-gradient-to-br from-blue-500/20 via-cyan-500/10 to-teal-500/20",
   },
   {
@@ -77,12 +81,11 @@ const sampleProducts: Product[] = [
     name: "Organic Essential Oils Collection",
     slug: "organic-essential-oils-collection",
     price: 34.99,
-    image: "",
+    image: "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=800&q=80",
     category: "Beauty",
     rating: 4.9,
     reviewCount: 278,
     badge: "trending",
-    emoji: "\uD83C\uDF3F",
     gradient: "bg-gradient-to-br from-green-500/20 via-emerald-500/10 to-teal-500/20",
   },
   {
@@ -91,12 +94,11 @@ const sampleProducts: Product[] = [
     slug: "ultra-slim-laptop-stand-aluminum",
     price: 59.99,
     comparePrice: 79.99,
-    image: "",
+    image: "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=800&q=80",
     category: "Electronics",
     rating: 4.5,
     reviewCount: 143,
     badge: "sale",
-    emoji: "\uD83D\uDCBB",
     gradient: "bg-gradient-to-br from-slate-500/20 via-gray-500/10 to-zinc-500/20",
   },
   {
@@ -104,12 +106,11 @@ const sampleProducts: Product[] = [
     name: "Professional Yoga Mat Extra Thick",
     slug: "professional-yoga-mat-extra-thick",
     price: 45.99,
-    image: "",
+    image: "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=800&q=80",
     category: "Sports",
     rating: 4.7,
     reviewCount: 203,
     badge: "new",
-    emoji: "\uD83E\uDDD8",
     gradient: "bg-gradient-to-br from-pink-500/20 via-rose-500/10 to-red-500/20",
   },
   {
@@ -118,12 +119,11 @@ const sampleProducts: Product[] = [
     slug: "bestselling-mystery-novel-box-set",
     price: 29.99,
     comparePrice: 49.99,
-    image: "",
+    image: "https://images.unsplash.com/photo-1495640388908-05fa85288e61?w=800&q=80",
     category: "Books",
     rating: 4.8,
     reviewCount: 567,
     badge: "sale",
-    emoji: "\uD83D\uDCDA",
     gradient: "bg-gradient-to-br from-indigo-500/20 via-blue-500/10 to-sky-500/20",
   },
   {
@@ -131,12 +131,11 @@ const sampleProducts: Product[] = [
     name: "Ceramic Plant Pot Set Minimalist",
     slug: "ceramic-plant-pot-set-minimalist",
     price: 39.99,
-    image: "",
+    image: "https://images.unsplash.com/photo-1578500494198-246f612d3b3d?w=800&q=80",
     category: "Home & Garden",
     rating: 4.6,
     reviewCount: 92,
     badge: "trending",
-    emoji: "\uD83C\uDFFA",
     gradient: "bg-gradient-to-br from-orange-500/20 via-amber-500/10 to-yellow-500/20",
   },
 ];
@@ -218,6 +217,7 @@ const trustBadges = [
 /* -------------------------------------------------------------------------- */
 
 function useCountdown() {
+  const [mounted, setMounted] = useState(false);
   const [timeLeft, setTimeLeft] = useState({
     hours: 0,
     minutes: 0,
@@ -225,6 +225,8 @@ function useCountdown() {
   });
 
   useEffect(() => {
+    setMounted(true);
+
     // Set the deal to end at midnight
     const getTarget = () => {
       const now = new Date();
@@ -251,7 +253,7 @@ function useCountdown() {
     return () => clearInterval(id);
   }, []);
 
-  return timeLeft;
+  return { timeLeft, mounted };
 }
 
 /* -------------------------------------------------------------------------- */
@@ -259,17 +261,17 @@ function useCountdown() {
 /* -------------------------------------------------------------------------- */
 
 const fadeInUp = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 20 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, delay: i * 0.1 },
+    transition: { duration: 0.3, delay: i * 0.05, ease: "easeOut" },
   }),
 };
 
 const staggerContainer = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.08 } },
+  visible: { transition: { staggerChildren: 0.04, delayChildren: 0.05 } },
 };
 
 /* -------------------------------------------------------------------------- */
@@ -277,7 +279,14 @@ const staggerContainer = {
 /* -------------------------------------------------------------------------- */
 
 export default function HomePage() {
-  const countdown = useCountdown();
+  const { timeLeft: countdown, mounted } = useCountdown();
+
+  // GSAP Animation Refs
+  const shopButton = useGSAPButton(0.3);
+  const dealsButton = useGSAPButton(0.4);
+  const heroFade = useGSAPFadeIn();
+  const badgePulse = useGSAPFloating();
+  const statsContainer = useGSAPStagger(".stat-item");
 
   return (
     <div className="flex flex-col">
@@ -285,6 +294,9 @@ export default function HomePage() {
       {/*  HERO BANNER                                                       */}
       {/* ------------------------------------------------------------------ */}
       <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-primary/10">
+        {/* Three.js Animated Background */}
+        <HeroBackground />
+
         {/* Decorative background shapes */}
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute -left-40 -top-40 size-80 rounded-full bg-primary/5 blur-3xl" />
@@ -294,22 +306,24 @@ export default function HomePage() {
 
         <div className="container relative mx-auto px-4 py-16 sm:py-20 lg:py-28">
           <div className="mx-auto max-w-3xl text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <Badge variant="secondary" className="mb-4 px-3 py-1 text-xs">
-                <Sparkles className="mr-1 size-3" />
-                New Season Collection 2025
-              </Badge>
-            </motion.div>
+            <div ref={badgePulse}>
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+              >
+                <Badge variant="secondary" className="mb-4 px-3 py-1 text-xs shadow-lg">
+                  <Sparkles className="mr-1 size-3" />
+                  New Season Collection 2025
+                </Badge>
+              </motion.div>
+            </div>
 
             <motion.h1
               className="mb-6 text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl xl:text-7xl"
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
+              transition={{ duration: 0.3, delay: 0.05, ease: "easeOut" }}
             >
               Discover Your{" "}
               <span className="bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
@@ -319,9 +333,9 @@ export default function HomePage() {
 
             <motion.p
               className="mx-auto mb-8 max-w-xl text-base text-muted-foreground sm:text-lg lg:text-xl"
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
+              transition={{ duration: 0.3, delay: 0.1, ease: "easeOut" }}
             >
               Explore thousands of premium products from world-class brands.
               Quality, style, and value -- all in one place.
@@ -329,49 +343,48 @@ export default function HomePage() {
 
             <motion.div
               className="flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4"
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
+              transition={{ duration: 0.3, delay: 0.15, ease: "easeOut" }}
             >
-              <Button size="lg" className="w-full gap-2 sm:w-auto" asChild>
-                <Link href="/products">
-                  Shop Now
-                  <ArrowRight className="size-4" />
-                </Link>
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="w-full gap-2 sm:w-auto"
-                asChild
-              >
-                <Link href="/deals">
-                  <Zap className="size-4" />
-                  View Deals
-                </Link>
-              </Button>
+              <div ref={shopButton}>
+                <Button size="lg" className="w-full gap-2 sm:w-auto shadow-xl hover:shadow-2xl transition-shadow" asChild>
+                  <Link href="/products">
+                    Shop Now
+                    <ArrowRight className="size-4" />
+                  </Link>
+                </Button>
+              </div>
+              <div ref={dealsButton}>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="w-full gap-2 sm:w-auto shadow-lg hover:shadow-xl transition-shadow"
+                  asChild
+                >
+                  <Link href="/deals">
+                    <Zap className="size-4" />
+                    View Deals
+                  </Link>
+                </Button>
+              </div>
             </motion.div>
 
             {/* Stats */}
-            <motion.div
-              className="mt-12 grid grid-cols-3 gap-6 sm:gap-8"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-            >
+            <div ref={statsContainer} className="mt-12 grid grid-cols-3 gap-6 sm:gap-8">
               {[
                 { value: "50K+", label: "Products" },
                 { value: "100K+", label: "Happy Customers" },
                 { value: "500+", label: "Brands" },
               ].map((stat) => (
-                <div key={stat.label} className="text-center">
-                  <p className="text-2xl font-bold sm:text-3xl">{stat.value}</p>
+                <div key={stat.label} className="stat-item text-center">
+                  <p className="text-2xl font-bold sm:text-3xl bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">{stat.value}</p>
                   <p className="text-xs text-muted-foreground sm:text-sm">
                     {stat.label}
                   </p>
                 </div>
               ))}
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
@@ -423,28 +436,30 @@ export default function HomePage() {
               Grab these deals before they are gone!
             </p>
           </div>
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
-              <Timer className="size-4" />
-              <span>Ends in:</span>
+          {mounted && (
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
+                <Timer className="size-4" />
+                <span>Ends in:</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                {[
+                  { value: countdown.hours, label: "H" },
+                  { value: countdown.minutes, label: "M" },
+                  { value: countdown.seconds, label: "S" },
+                ].map((unit) => (
+                  <div key={unit.label} className="flex items-center gap-1">
+                    <span className="flex size-9 items-center justify-center rounded-md bg-primary text-sm font-bold text-primary-foreground sm:size-10 sm:text-base">
+                      {String(unit.value).padStart(2, "0")}
+                    </span>
+                    <span className="text-[10px] font-medium text-muted-foreground">
+                      {unit.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="flex items-center gap-1.5">
-              {[
-                { value: countdown.hours, label: "H" },
-                { value: countdown.minutes, label: "M" },
-                { value: countdown.seconds, label: "S" },
-              ].map((unit) => (
-                <div key={unit.label} className="flex items-center gap-1">
-                  <span className="flex size-9 items-center justify-center rounded-md bg-primary text-sm font-bold text-primary-foreground sm:size-10 sm:text-base">
-                    {String(unit.value).padStart(2, "0")}
-                  </span>
-                  <span className="text-[10px] font-medium text-muted-foreground">
-                    {unit.label}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
+          )}
         </div>
 
         {/* Horizontal scroll on mobile, grid on larger */}
@@ -471,10 +486,10 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <motion.div
             className="mb-8 text-center"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
           >
             <h2 className="mb-2 text-2xl font-bold sm:text-3xl">
               Shop by Category
@@ -525,10 +540,10 @@ export default function HomePage() {
       <section className="container mx-auto px-4 py-12 lg:py-16">
         <motion.div
           className="mb-8 flex items-end justify-between"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
         >
           <div>
             <h2 className="mb-2 text-2xl font-bold sm:text-3xl">
@@ -571,7 +586,8 @@ export default function HomePage() {
             className="mb-6 text-center text-sm font-medium text-muted-foreground"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.2 }}
           >
             Trusted by leading brands worldwide
           </motion.p>
@@ -587,7 +603,7 @@ export default function HomePage() {
                 x: {
                   repeat: Infinity,
                   repeatType: "loop",
-                  duration: 20,
+                  duration: 15,
                   ease: "linear",
                 },
               }}
@@ -622,10 +638,10 @@ export default function HomePage() {
         <div className="container relative mx-auto px-4">
           <motion.div
             className="mx-auto max-w-2xl text-center"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
           >
             <div className="mb-4 inline-flex size-12 items-center justify-center rounded-full bg-white/10">
               <Mail className="size-6 text-primary-foreground" />

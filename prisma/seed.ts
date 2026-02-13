@@ -1,4 +1,4 @@
-import { PrismaClient } from "../src/generated/prisma";
+import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
@@ -26,22 +26,22 @@ async function main() {
 
   console.log("Cleaned existing data.");
 
-  // Create Categories
+  // Create Categories with images
   const categories = await Promise.all([
     prisma.category.create({
-      data: { name: "Electronics", slug: "electronics", description: "Latest gadgets & technology", image: "" },
+      data: { name: "Electronics", slug: "electronics", description: "Latest gadgets & technology", image: "https://images.unsplash.com/photo-1498049794561-7780e7231661?w=800&q=80" },
     }),
     prisma.category.create({
-      data: { name: "Fashion", slug: "fashion", description: "Trending styles & apparel", image: "" },
+      data: { name: "Fashion", slug: "fashion", description: "Trending styles & apparel", image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800&q=80" },
     }),
     prisma.category.create({
-      data: { name: "Home & Garden", slug: "home-garden", description: "Decor & home essentials", image: "" },
+      data: { name: "Home & Garden", slug: "home-garden", description: "Decor & home essentials", image: "https://images.unsplash.com/photo-1615529162924-f7c3fbe5f298?w=800&q=80" },
     }),
     prisma.category.create({
-      data: { name: "Sports & Outdoors", slug: "sports-outdoors", description: "Gear & equipment", image: "" },
+      data: { name: "Sports & Outdoors", slug: "sports-outdoors", description: "Gear & equipment", image: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800&q=80" },
     }),
     prisma.category.create({
-      data: { name: "Beauty & Health", slug: "beauty-health", description: "Skincare & wellness", image: "" },
+      data: { name: "Beauty & Health", slug: "beauty-health", description: "Skincare & wellness", image: "https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=800&q=80" },
     }),
   ]);
 
@@ -67,7 +67,7 @@ async function main() {
       email: "admin@shopverse.com",
       hashedPassword,
       role: "ADMIN",
-      image: "",
+      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=admin",
     },
   });
 
@@ -79,7 +79,7 @@ async function main() {
       email: "john@example.com",
       hashedPassword: customerPassword,
       role: "CUSTOMER",
-      image: "",
+      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=john",
     },
   });
 
@@ -91,7 +91,7 @@ async function main() {
       email: "sarah@shopverse.com",
       hashedPassword: agentPassword,
       role: "SUPPORT",
-      image: "",
+      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=sarah",
     },
   });
 
@@ -113,17 +113,69 @@ async function main() {
     },
   });
 
-  // Create Products
-  const gradients = [
-    "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-    "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
-    "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
-    "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
-    "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
-    "linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)",
-    "linear-gradient(135deg, #fccb90 0%, #d57eeb 100%)",
-    "linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%)",
-  ];
+  // Create Products with real images from Unsplash
+  const productImages = {
+    headphones: [
+      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&q=80",
+      "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=800&q=80",
+      "https://images.unsplash.com/photo-1545127398-14699f92334b?w=800&q=80"
+    ],
+    laptopStand: [
+      "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=800&q=80",
+      "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=800&q=80",
+      "https://images.unsplash.com/photo-1587202372634-32705e3bf49c?w=800&q=80"
+    ],
+    sweater: [
+      "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&q=80",
+      "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=800&q=80",
+      "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800&q=80"
+    ],
+    securityCamera: [
+      "https://images.unsplash.com/photo-1557324232-b8917d3c3dcb?w=800&q=80",
+      "https://images.unsplash.com/photo-1558002038-1055907df827?w=800&q=80",
+      "https://images.unsplash.com/photo-1612198188060-c7c2a3b66eae?w=800&q=80"
+    ],
+    vase: [
+      "https://images.unsplash.com/photo-1578500494198-246f612d3b3d?w=800&q=80",
+      "https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=800&q=80",
+      "https://images.unsplash.com/photo-1493217465235-252dd9c0d632?w=800&q=80"
+    ],
+    runningShoes: [
+      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&q=80",
+      "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=800&q=80",
+      "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=800&q=80"
+    ],
+    skincare: [
+      "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=800&q=80",
+      "https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=800&q=80",
+      "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&q=80"
+    ],
+    smartwatch: [
+      "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=800&q=80",
+      "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=800&q=80",
+      "https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=800&q=80"
+    ],
+    backpack: [
+      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&q=80",
+      "https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?w=800&q=80",
+      "https://images.unsplash.com/photo-1581605405669-fcdf81165afa?w=800&q=80"
+    ],
+    plant: [
+      "https://images.unsplash.com/photo-1509423350716-97f9360b4e09?w=800&q=80",
+      "https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?w=800&q=80",
+      "https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=800&q=80"
+    ],
+    yogaMat: [
+      "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=800&q=80",
+      "https://images.unsplash.com/photo-1592432678016-e910b452f9a2?w=800&q=80",
+      "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=80"
+    ],
+    sunglasses: [
+      "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=800&q=80",
+      "https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=800&q=80",
+      "https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?w=800&q=80"
+    ]
+  };
 
   const products = await Promise.all([
     prisma.product.create({
@@ -135,7 +187,7 @@ async function main() {
         comparePrice: 299.99,
         sku: "WH-NC-001",
         stock: 45,
-        images: [gradients[0], gradients[1], gradients[2]],
+        images: productImages.headphones,
         featured: true,
         tags: ["wireless", "headphones", "noise-cancelling", "bluetooth"],
         categoryId: categories[0].id,
@@ -158,7 +210,7 @@ async function main() {
         comparePrice: 99.99,
         sku: "LS-US-002",
         stock: 120,
-        images: [gradients[1], gradients[0], gradients[4]],
+        images: productImages.laptopStand,
         featured: false,
         tags: ["laptop", "stand", "ergonomic", "aluminum"],
         categoryId: categories[0].id,
@@ -180,7 +232,7 @@ async function main() {
         comparePrice: 249.99,
         sku: "CS-PM-003",
         stock: 35,
-        images: [gradients[5], gradients[6], gradients[7]],
+        images: productImages.sweater,
         featured: true,
         tags: ["cashmere", "sweater", "luxury", "fashion"],
         categoryId: categories[1].id,
@@ -203,7 +255,7 @@ async function main() {
         price: 69.99,
         sku: "SC-SH-004",
         stock: 200,
-        images: [gradients[2], gradients[3], gradients[0]],
+        images: productImages.securityCamera,
         featured: false,
         tags: ["security", "camera", "smart-home", "wifi"],
         categoryId: categories[0].id,
@@ -219,7 +271,7 @@ async function main() {
         comparePrice: 179.99,
         sku: "CV-HC-005",
         stock: 18,
-        images: [gradients[7], gradients[5], gradients[3]],
+        images: productImages.vase,
         featured: true,
         tags: ["ceramic", "vase", "handcrafted", "home-decor"],
         categoryId: categories[2].id,
@@ -242,7 +294,7 @@ async function main() {
         comparePrice: 199.99,
         sku: "RS-PR-006",
         stock: 75,
-        images: [gradients[4], gradients[0], gradients[2]],
+        images: productImages.runningShoes,
         featured: true,
         tags: ["running", "shoes", "sports", "performance"],
         categoryId: categories[3].id,
@@ -267,7 +319,7 @@ async function main() {
         comparePrice: 119.99,
         sku: "SS-OG-007",
         stock: 50,
-        images: [gradients[6], gradients[5], gradients[7]],
+        images: productImages.skincare,
         featured: false,
         tags: ["skincare", "organic", "gift-set", "beauty"],
         categoryId: categories[4].id,
@@ -283,7 +335,7 @@ async function main() {
         comparePrice: 329.99,
         sku: "LB-ML-008",
         stock: 22,
-        images: [gradients[3], gradients[0], gradients[6]],
+        images: productImages.backpack,
         featured: true,
         tags: ["backpack", "leather", "minimalist", "fashion"],
         categoryId: categories[1].id,
@@ -305,7 +357,7 @@ async function main() {
         price: 149.99,
         sku: "FT-SP-009",
         stock: 95,
-        images: [gradients[2], gradients[4], gradients[1]],
+        images: productImages.smartwatch,
         featured: false,
         tags: ["fitness", "tracker", "smartwatch", "health"],
         categoryId: categories[0].id,
@@ -328,7 +380,7 @@ async function main() {
         comparePrice: 139.99,
         sku: "TB-LB-010",
         stock: 40,
-        images: [gradients[7], gradients[5], gradients[3]],
+        images: productImages.plant,
         featured: false,
         tags: ["blanket", "linen", "throw", "home-decor"],
         categoryId: categories[2].id,
@@ -351,7 +403,7 @@ async function main() {
         comparePrice: 450.00,
         sku: "WB-TW-011",
         stock: 15,
-        images: [gradients[6], gradients[3], gradients[0]],
+        images: productImages.sunglasses,
         featured: false,
         tags: ["blazer", "wool", "tailored", "fashion"],
         categoryId: categories[1].id,
@@ -375,7 +427,7 @@ async function main() {
         comparePrice: 94.99,
         sku: "YM-PC-012",
         stock: 65,
-        images: [gradients[4], gradients[2], gradients[6]],
+        images: productImages.yogaMat,
         featured: false,
         tags: ["yoga", "mat", "fitness", "eco-friendly"],
         categoryId: categories[3].id,
