@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { Providers } from "@/components/providers";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import { ChatWidget } from "@/components/chat/chat-widget";
 import "./globals.css";
 
 const inter = Inter({
@@ -47,6 +48,7 @@ export default function RootLayout({
             <main className="flex-1">{children}</main>
             <Footer />
           </div>
+          <ChatWidget />
         </Providers>
       </body>
     </html>

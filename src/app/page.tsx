@@ -165,24 +165,17 @@ const featuredCategories = [
   },
   {
     name: "Sports",
-    href: "/products?category=sports",
+    href: "/products?category=sports-outdoors",
     emoji: "\u26BD",
     gradient: "from-orange-600 to-amber-500",
     description: "Gear & equipment",
   },
   {
     name: "Beauty",
-    href: "/products?category=beauty",
+    href: "/products?category=beauty-health",
     emoji: "\u2728",
     gradient: "from-purple-600 to-violet-500",
     description: "Skincare & cosmetics",
-  },
-  {
-    name: "Books",
-    href: "/products?category=books",
-    emoji: "\uD83D\uDCDA",
-    gradient: "from-indigo-600 to-blue-500",
-    description: "Bestsellers & more",
   },
 ];
 
