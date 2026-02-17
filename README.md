@@ -88,6 +88,6 @@ This project is optimized for Vercel deployment.
 
 MIT
 
-## 🎉 Built with Claude Code
+## 🎉 Built with Love
 
-This project was built with assistance from Claude Code, featuring stunning GSAP animations and professional design.
+This project was built with love, featuring stunning GSAP animations and professional design.
